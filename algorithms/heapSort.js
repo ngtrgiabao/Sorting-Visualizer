@@ -1,27 +1,3 @@
-async function heapSort(arr, n) {
-    // Build max heap
-    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
-        if (hasPressedStop) {
-            return;
-        }
-        await heapify(arr, n, i);
-    }
-
-    // Extract elements from the heap one by one
-    for (let i = n - 1; i > 0; i--) {
-        if (hasPressedStop) {
-            return;
-        }
-        // Swap root with the last element
-        swap(arr[0], arr[i]);
-        arr[i].style.background = "green";
-        await delayTime(delay);
-
-        // Heapify the reduced heap
-        await heapify(arr, i, 0);
-    }
-}
-
 async function heapify(arr, n, i) {
     let largest = i;
     const l = 2 * i + 1;
@@ -53,7 +29,32 @@ async function heapify(arr, n, i) {
     }
 }
 
+async function heapSort(arr, n) {
+    // Build max heap
+    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+        if (hasPressedStop) {
+            return;
+        }
+        await heapify(arr, n, i);
+    }
+
+    // Extract elements from the heap one by one
+    for (let i = n - 1; i > 0; i--) {
+        if (hasPressedStop) {
+            return;
+        }
+        // Swap root with the last element
+        swap(arr[0], arr[i]);
+        arr[i].style.background = "green";
+        await delayTime(delay);
+
+        // Heapify the reduced heap
+        await heapify(arr, i, 0);
+    }
+}
+
 const heapSortbtn = document.querySelector(".heapSort");
+
 heapSortbtn.addEventListener("click", () => {
     let arr = document.querySelectorAll(".bar");
     let n = arr.length;

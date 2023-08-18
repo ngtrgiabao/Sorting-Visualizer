@@ -1,10 +1,10 @@
-let hasPressedStop = false; // Use a boolean value instead of Boolean object
 
 async function bubble() {
     const ele = document.querySelectorAll(".bar");
+
     for (let i = 0; i < ele.length - 1; i++) {
         for (let j = 0; j < ele.length - i - 1; j++) {
-            if (hasPressedStop == true) {
+            if (hasPressedStop === true) {
                 return; // Exit early if the stop button is pressed
             }
             ele[j].style.background = "cyan";
@@ -38,7 +38,7 @@ const handleBubbleSort = () => {
     // Perform Bubble Sort and handle UI updates
     bubble()
         .then(() => {
-            if (hasPressedStop == true) {
+            if (hasPressedStop === true) {
                 disableSpeedSlider();
             } else {
                 enableSortingBtn();

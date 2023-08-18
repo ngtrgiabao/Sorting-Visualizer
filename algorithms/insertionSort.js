@@ -44,26 +44,26 @@ async function insertion() {
 }
 
 const inSortbtn = document.querySelector(".insertionSort");
-inSortbtn.addEventListener("click", async function () {
-    try {
-        disableSortingBtn();
-        disableSizeSlider();
-        disableNewArrayBtn();
-        enableStopSortingBtn();
+inSortbtn.addEventListener("click", () => {
+    disableSortingBtn();
+    disableSizeSlider();
+    disableNewArrayBtn();
+    enableStopSortingBtn();
 
-        // Perform Insertion Sort and handle UI updates
-        await insertion();
-
-        if (hasPressedStop) {
-            disableSpeedSlider();
-        } else {
-            enableSortingBtn();
-            enableSizeSlider();
-        }
-        enableNewArrayBtn();
-        disableStopSortingBtn();
-    } catch (error) {
-        console.error("An error occurred during sorting:", error);
-        // Handle the error condition if needed
-    }
+    // Perform Insertion Sort and handle UI updates
+    insertion()
+        .then(() => {
+            if (hasPressedStop) {
+                disableSpeedSlider();
+            } else {
+                enableSortingBtn();
+                enableSizeSlider();
+            }
+            enableNewArrayBtn();
+            disableStopSortingBtn();
+        })
+        .catch((error) => {
+            console.error("An error occurred during sorting:", error);
+            // Handle the error condition if needed
+        });
 });
