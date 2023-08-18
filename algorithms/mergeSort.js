@@ -89,6 +89,21 @@ async function mergeSort(arr, l, r) {
     await merge(arr, l, m, r);
 }
 
+// Function to enable UI elements after sorting is done
+async function performMergeSort(arr, l, r) {
+    await mergeSort(arr, l, r);
+
+    if (hasPressedStop) {
+        disableSpeedSlider();
+    } else {
+        enableSortingBtn();
+        enableSizeSlider();
+    }
+
+    enableNewArrayBtn();
+    disableStopSortingBtn();
+}
+
 // Event listener for the merge sort button
 const mergeSortbtn = document.querySelector(".mergeSort");
 mergeSortbtn.addEventListener("click", () => {
@@ -105,18 +120,3 @@ mergeSortbtn.addEventListener("click", () => {
     // Call the async function within a regular function
     performMergeSort(arr, l, r);
 });
-
-// Function to enable UI elements after sorting is done
-async function performMergeSort(arr, l, r) {
-    await mergeSort(arr, l, r);
-
-    if (hasPressedStop) {
-        disableSpeedSlider();
-    } else {
-        enableSortingBtn();
-        enableSizeSlider();
-    }
-
-    enableNewArrayBtn();
-    disableStopSortingBtn();
-}
