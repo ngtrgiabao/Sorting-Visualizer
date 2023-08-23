@@ -91,6 +91,7 @@ async function mergeSort(arr, l, r) {
 
 // Function to enable UI elements after sorting is done
 async function performMergeSort(arr, l, r) {
+    let hasPressedStop = false;
     await mergeSort(arr, l, r);
 
     if (hasPressedStop) {
@@ -106,7 +107,7 @@ async function performMergeSort(arr, l, r) {
 
 // Event listener for the merge sort button
 const mergeSortbtn = document.querySelector(".mergeSort");
-mergeSortbtn.addEventListener("click", () => {
+const handleMergeSort = () => {
     let arr = document.querySelectorAll(".bar");
     let l = 0;
     let r = parseInt(arr.length) - 1;
@@ -118,5 +119,14 @@ mergeSortbtn.addEventListener("click", () => {
     enableStopSortingBtn();
 
     // Call the async function within a regular function
-    performMergeSort(arr, l, r);
-});
+
+    if (arr) {
+        performMergeSort(arr, l, r);
+    }
+};
+
+if (mergeSortbtn) {
+    mergeSortbtn.addEventListener("click", handleMergeSort);
+}
+
+module.exports = { performMergeSort };

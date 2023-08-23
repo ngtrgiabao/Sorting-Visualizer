@@ -73,10 +73,12 @@ function delayTime(milisec) {
 let arraySize = document.querySelector("#size_input");
 
 // Event listener to update the bars on the UI
-arraySize.addEventListener("input", function () {
-    console.log(arraySize.value, typeof arraySize.value);
-    createNewArray(parseInt(arraySize.value));
-});
+if (arraySize) {
+    arraySize.addEventListener("input", function () {
+        // console.log(arraySize.value, typeof arraySize.value);
+        createNewArray(parseInt(arraySize.value));
+    });
+}
 
 // Default input for waitforme function (260ms)
 let delay = 260;
@@ -85,11 +87,12 @@ let delay = 260;
 let delayElement = document.querySelector("#speed_input");
 
 // Event listener to update delay time
-delayElement.addEventListener("input", function () {
-    console.log(delayElement.value, typeof delayElement.value);
-    delay = 320 - parseInt(delayElement.value);
-});
-
+if (delayElement) {
+    delayElement.addEventListener("input", function () {
+        // console.log(delayElement.value, typeof delayElement.value);
+        delay = 320 - parseInt(delayElement.value);
+    });
+}
 // Creating barArray to store randomly generated numbers
 let barArray = [];
 
@@ -106,7 +109,7 @@ function createNewArray(noOfBars = 60) {
     for (let i = 0; i < noOfBars; i++) {
         barArray.push(Math.floor(Math.random() * 251));
     }
-    console.log(barArray);
+    // console.log(barArray);
 
     const bars = document.querySelector("#sorting");
 
@@ -117,33 +120,59 @@ function createNewArray(noOfBars = 60) {
         bar.classList.add("bar");
         bar.classList.add("flex-item");
         bar.classList.add(`barNo${i}`);
-        bars.appendChild(bar);
+        if (bars) {
+            bars.appendChild(bar);
+        }
     }
 }
 
 // Helper function to delete all the previous bars so that new can be added
 function deleteChild() {
     const bar = document.querySelector("#sorting");
-    bar.innerHTML = "";
+    if (bar) {
+        bar.innerHTML = "";
+    }
 }
 
 let hasPressedStop;
 
 // Selecting newarray button from DOM and adding eventlistener
 const newArrayButton = document.querySelector(".new");
-newArrayButton.addEventListener("click", function () {
-    hasPressedStop = false;
-    enableSpeedSlider();
-    console.log("From newArray " + arraySize.value);
-    console.log("From newArray " + delay);
-    enableSortingBtn();
-    enableSizeSlider();
-    createNewArray(arraySize.value);
-});
+if (newArrayButton) {
+    newArrayButton.addEventListener("click", function () {
+        hasPressedStop = false;
+        enableSpeedSlider();
+        console.log("From newArray " + arraySize.value);
+        console.log("From newArray " + delay);
+        enableSortingBtn();
+        enableSizeSlider();
+        createNewArray(arraySize.value);
+    });
+}
 
 const stopSortingButton = document.querySelector(".stop");
-stopSortingButton.addEventListener("click", function () {
-    disableSortingBtn();
-    disableSizeSlider();
-    hasPressedStop = true;
-});
+if (stopSortingButton) {
+    stopSortingButton.addEventListener("click", function () {
+        disableSortingBtn();
+        disableSizeSlider();
+        hasPressedStop = true;
+    });
+}
+
+module.exports = {
+    swap,
+    disableSortingBtn,
+    enableSortingBtn,
+    disableSizeSlider,
+    disableSpeedSlider,
+    enableSpeedSlider,
+    enableSizeSlider,
+    disableNewArrayBtn,
+    enableNewArrayBtn,
+    enableStopSortingBtn,
+    disableStopSortingBtn,
+    delayTime,
+    createNewArray,
+    deleteChild,
+    hasPressedStop,
+};
