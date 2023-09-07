@@ -13,7 +13,6 @@ const {
 } = require("./helper");
 const { createNewArray } = require("./controllers");
 
-const ele = document.querySelectorAll(".bar");
 let delay = 260;
 let arraySize = document.querySelector("#size_input");
 let hasPressedStop = false;
@@ -61,6 +60,11 @@ if (btn.stopSortingButton) {
 }
 
 // ------------------HEAP SORT-------------------------
+/**
+ * @param {NodeListOf<Element>} arr
+ * @param {int} n
+ * @param {int} i
+ */
 async function heapify(arr, n, i) {
     let largest = i;
     const l = 2 * i + 1;
@@ -91,6 +95,11 @@ async function heapify(arr, n, i) {
         await heapify(arr, n, largest);
     }
 }
+
+/**
+ * @param {NodeListOf<Element>} arr
+ * @param {int} n
+ */
 async function heapSort(arr, n) {
     // Build max heap
     for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
@@ -116,6 +125,9 @@ async function heapSort(arr, n) {
 }
 
 // ------------------INSERTION SORT-------------------------
+/**
+ * @param {NodeListOf<Element>} ele
+ */
 async function insertion(ele) {
     ele[0].style.background = "green";
 
@@ -162,9 +174,22 @@ async function insertion(ele) {
 
 // ------------------MERGE SORT-------------------------
 // Function to merge two subarrays within 'ele'
+// This function is responsible for merging two subarrays within the main array during the merge sort process. It also visualizes the merging process by changing the background color of elements.
+
+/**
+ * @param {NodeListOf<Element>} arr
+ * @param {int} low
+ * @param {int} mid
+ * @param {int} high
+ * represent the indices that define the two subarrays to be merged.
+ */
 async function merge(arr, low, mid, high) {
+    // calculates the number of elements in the left subarray
     const n1 = mid - low + 1;
+    //  calculates the number of elements in the right subarray
     const n2 = high - mid;
+
+    // created to store the elements of the subarrays.
     let left = new Array(n1);
     let right = new Array(n2);
 
@@ -239,8 +264,16 @@ async function merge(arr, low, mid, high) {
         k++;
     }
 }
+
 // Recursive function to perform merge sort on 'ele'
+// The function recursively divides the array into smaller subarrays until it reaches the base case (when the subarray size is 1 or 0).
+/**
+ * @param {NodeListOf<Element>} arr
+ * @param {int} l
+ * @param {int} r
+ */
 async function mergeSort(arr, l, r) {
+    // l and r represent the left and right boundaries of the subarray to be sorted.
     if (l >= r) {
         // Base case: sorting complete
         return;
@@ -250,8 +283,15 @@ async function mergeSort(arr, l, r) {
     await mergeSort(arr, m + 1, r);
     await merge(arr, l, m, r);
 }
+
+/**
+ * @param {NodeListOf<Element>} arr
+ * @param {int} l
+ * @param {int} r
+ */
 // Function to enable UI elements after sorting is done
 async function performMergeSort(arr, l, r) {
+    // track whether the user has stopped the sorting process.
     let hasPressedStop = false;
     await mergeSort(arr, l, r);
 
@@ -267,6 +307,13 @@ async function performMergeSort(arr, l, r) {
 }
 
 // ------------------QUICK SORT-------------------------
+
+/**
+ *
+ * @param {NodeListOf<Element>} ele
+ * @param {int} l
+ * @param {int} r
+ */
 async function partitionLomuto(ele, l, r) {
     if (ele) {
         let i = l - 1;
@@ -324,6 +371,13 @@ async function partitionLomuto(ele, l, r) {
         return i; // Return the pivot index
     }
 }
+
+/**
+ *
+ * @param {NodeListOf<Element>} ele
+ * @param {int} l
+ * @param {int} r
+ */
 async function quickSort(ele, l, r) {
     if (l < r) {
         let pivotIndex = await partitionLomuto(ele, l, r);
@@ -341,6 +395,11 @@ async function quickSort(ele, l, r) {
 }
 
 // ------------------BUBBLE SORT-------------------------
+
+/**
+ *
+ * @param {NodeListOf<Element>} ele
+ */
 async function bubble(ele) {
     if (!ele) return;
 
@@ -371,6 +430,10 @@ async function bubble(ele) {
 }
 
 // ------------------SELECTION SORT-------------------------
+/**
+ *
+ * @param {NodeListOf<Element>} ele
+ */
 async function selection(ele) {
     for (let i = 0; i < ele.length; i++) {
         if (hasPressedStop == true) {
@@ -496,6 +559,7 @@ const handleSelection = () => {
         });
 };
 const handleMergeSort = () => {
+    // It retrieves the array elements from the DOM.
     let arr = document.querySelectorAll(".bar");
     let l = 0;
     let r = parseInt(arr.length) - 1;
@@ -507,7 +571,6 @@ const handleMergeSort = () => {
     enableStopSortingBtn();
 
     // Call the async function within a regular function
-
     if (arr) {
         performMergeSort(arr, l, r);
     }
